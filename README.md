@@ -1,5 +1,5 @@
 
-# Internet Archive Downloader (iadl)
+# Internet Archive Manager (iadl)
 
 A Python package to scrape and download files from the Internet Archive.
 
@@ -8,7 +8,7 @@ A Python package to scrape and download files from the Internet Archive.
 You can install the package using `pip`:
 
 ```bash
-pip install ia-downloader
+pip install ia-manager
 ```
 
 ## Usage
