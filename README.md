@@ -1,5 +1,5 @@
 
-# Internet Archive Scraper (IAS)
+# Internet Archive Downloader (iadl)
 
 A Python package to scrape and download files from the Internet Archive.
 
@@ -9,7 +9,7 @@ A Python package to scrape and download files from the Internet Archive.
 You can install the package using `pip`:
 
 ```bash
-pip install ias
+pip install iadl
 ```
 ## Usage
 
@@ -17,7 +17,7 @@ pip install ias
 
 To download all files from an Internet Archive collection:
 ```
-ias --url https://archive.org/details/some-collection --dest ./downloads
+iadl --url https://archive.org/details/some-collection --dest ./downloads
 ```
 ### Filter by File Type
 
@@ -25,29 +25,29 @@ You can filter files by specific types using the following arguments:
 
 -   **Download only archive files**  (e.g.,  `.zip`,  `.rar`):
     ```
-    ias --url https://archive.org/details/some-collection --dest ./downloads --archive
+    iadl --url https://archive.org/details/some-collection --dest ./downloads --archive
     ```
 -   **Download only video files**  (e.g.,  `.mp4`,  `.avi`):
     ```
-    ias --url https://archive.org/details/some-collection --dest ./downloads --video
+    iadl --url https://archive.org/details/some-collection --dest ./downloads --video
     ```
 -   **Download only audio files**  (e.g.,  `.mp3`,  `.flac`):
 ```
-    ias --url https://archive.org/details/some-collection --dest ./downloads --audio
+    iadl --url https://archive.org/details/some-collection --dest ./downloads --audio
 ``` 
 
 ### Limit the Number of Files
 
 To limit the number of files downloaded:
 ```
-ias --url https://archive.org/details/some-collection --dest ./downloads --limit 5
+iadl --url https://archive.org/details/some-collection --dest ./downloads --limit 5
 ```
 
 ### Show File Links
 
 To display the direct file links of each file in the terminal:
 ```
-ias --url https://archive.org/details/some-collection --dest ./downloads --show-links
+iadl --url https://archive.org/details/some-collection --show-links
 ```
 
 
@@ -55,7 +55,7 @@ ias --url https://archive.org/details/some-collection --dest ./downloads --show-
 
 You can combine multiple filters. For example, to download only video and audio files:
 ```
-ias --url https://archive.org/details/some-collection --dest ./downloads --video --audio
+iadl --url https://archive.org/details/some-collection --dest ./downloads --video --audio
 ```
 
 
@@ -63,7 +63,7 @@ ias --url https://archive.org/details/some-collection --dest ./downloads --video
 
 To download multiple files at the same time through separate processes. Setting the number will determine how many files at any one given moment until its finished. ***Recommend 2-3, be nice to the servers.***
 ```
-ias --url https://archive.org/details/some-collection --dest ./downloads --audio --concurrent 3
+iadl --url https://archive.org/details/some-collection --dest ./downloads --audio --concurrent 3
 ```
 
 
@@ -71,19 +71,43 @@ ias --url https://archive.org/details/some-collection --dest ./downloads --audio
 
 For a full list of options, use the  `--help`  flag:
 ```
-ias --help
+iadl --help
 ```
 
 ### Uninstall
 
 If you wish to remove the dependencies ***(must be first otherwise*** `pip uninstall` ***will remove the uninstaller, IF YOU WANT THE DEPENDENCIES TO STAY, just skip this command.)***:
 ```bash
-ias-cleanup
+iadl-cleanup
 ```
 
 To remove the module:
 ```bash
-pip uninstall ias
+pip uninstall iadl
 ```
 
-***IF*** you messed up and ran ```pip uninstall ias``` first, and still want the dependencies removed, no problem just reinstall the package again ```pip install ias``` and repeat the above 2 commands in order.
+***IF*** you messed up and ran ```pip uninstall iadl``` first, and still want the dependencies removed, no problem just reinstall the package again ```pip install iadl``` and repeat the above 2 commands in order.
+
+
+### Install in Virtual Enviroment
+
+#### For Windows:
+```
+python -m venv env
+env\Scripts\Activate.ps1
+pip install iadl
+```
+When done:
+```
+deactivate
+```
+
+#### For Linux:
+```
+python3 -m venv env
+source env/Scripts/activate
+```
+When done:
+```
+deactivate
+```
