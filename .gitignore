@@ -1,0 +1,60 @@
+# misc
+setup.py
+MANIFEST.in
+requirements.txt
+notes.txt
+test/
+
+# Ignore Python compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore distribution and build directories
+dist/
+build/
+*.egg-info/
+*.egg
+*.whl
+
+# Ignore virtual environments
+venv/
+env/
+virtualenv/
+.venv/
+.venv/
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore local configuration files
+.env
+.env.local
+.env.*.local
+
+# Ignore logs and databases
+*.log
+*.sqlite
+*.db
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Windows system files
+Thumbs.db
+
+# Ignore test and coverage files
+.coverage
+htmlcov/
+.pytest_cache/
+test_output/
+
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore downloaded files (optional, if you don't want to track downloaded files)
+downloads/
