@@ -75,29 +75,30 @@ def main():
     try:
         parser = argparse.ArgumentParser(description='Download files from Internet Archive.')
         
-        parser.add_argument('--dest', '-d', required='--show-links' not in sys.argv, 
+        # Primary arguments with both short and long forms
+        parser.add_argument('-u', '--url', required=True, help='Full URL of the Internet Archive collection')
+        parser.add_argument('-d', '--dest', required='--show-links' not in sys.argv, 
                           help='Destination folder for downloaded files (not required if only showing links)')
-        parser.add_argument('--limit', '-l', type=int, default=0, help='Limit number of files to download (0 for all)')
-        parser.add_argument('--url', '-u', required=True, help='Full URL of the Internet Archive collection')
-        parser.add_argument('--show-links', action='store_true', help='Display the file links in the terminal without downloading')
-        parser.add_argument('--concurrent', '-c', type=int, default=1, help='Maximum number of files to download concurrently')
+        parser.add_argument('-l', '--limit', type=int, default=0, help='Limit number of files to download (0 for all)')
+        parser.add_argument('-s', '--show-links', action='store_true', help='Display file links without downloading')
+        parser.add_argument('-c', '--concurrent', type=int, default=1, help='Maximum concurrent downloads (default: 1)')
         
-        # Category filters
-        parser.add_argument('--archive', action='store_true', help='Download only archive formats')
-        parser.add_argument('--video', action='store_true', help='Download only video formats')
-        parser.add_argument('--audio', action='store_true', help='Download only audio formats')
-        parser.add_argument('--streaming', action='store_true', help='Download only streaming formats')
-        parser.add_argument('--audiobooks', action='store_true', help='Download only audiobook formats')
-        parser.add_argument('--disk_images', action='store_true', help='Download only disk image formats')
-        parser.add_argument('--documents', action='store_true', help='Download only document formats')
-        parser.add_argument('--executables', action='store_true', help='Download only executable formats')
-        parser.add_argument('--data', action='store_true', help='Download only data formats')
-        parser.add_argument('--web', action='store_true', help='Download only web formats')
-        parser.add_argument('--comics', action='store_true', help='Download only comic formats')
-        parser.add_argument('--ebooks', action='store_true', help='Download only eBook formats')
-        parser.add_argument('--pictures', action='store_true', help='Download only picture formats')
-        parser.add_argument('--containers', action='store_true', help='Download only container formats')
-        parser.add_argument('--torrent', action='store_true', help='Download only torrent files')
+        # Category filters with short options
+        parser.add_argument('-a', '--archive', action='store_true', help='Download only archive formats')
+        parser.add_argument('-v', '--video', action='store_true', help='Download only video formats')
+        parser.add_argument('-m', '--audio', action='store_true', help='Download only audio formats (m for music)')
+        parser.add_argument('-t', '--streaming', action='store_true', help='Download only streaming formats')
+        parser.add_argument('-b', '--audiobooks', action='store_true', help='Download only audiobook formats')
+        parser.add_argument('-i', '--disk_images', action='store_true', help='Download only disk image formats')
+        parser.add_argument('-o', '--documents', action='store_true', help='Download only document formats')
+        parser.add_argument('-e', '--executables', action='store_true', help='Download only executable formats')
+        parser.add_argument('-f', '--data', action='store_true', help='Download only data formats')
+        parser.add_argument('-w', '--web', action='store_true', help='Download only web formats')
+        parser.add_argument('-x', '--comics', action='store_true', help='Download only comic formats')
+        parser.add_argument('-k', '--ebooks', action='store_true', help='Download only eBook formats')
+        parser.add_argument('-p', '--pictures', action='store_true', help='Download only picture formats')
+        parser.add_argument('-n', '--containers', action='store_true', help='Download only container formats')
+        parser.add_argument('-r', '--torrent', action='store_true', help='Download only torrent files')
         
         args = parser.parse_args()
         
