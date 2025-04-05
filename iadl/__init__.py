@@ -1,5 +1,5 @@
 # Package metada
-__version__ = "1.0.3"
+__version__ = "1.0.4"
 __author__ = "vichmartins"
 __description__ = "A Python package to scrape and download files from the Internet Archive."
 
