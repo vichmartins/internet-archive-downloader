@@ -8,7 +8,7 @@ A Python package to scrape and download files from the Internet Archive.
 You can install the package using `pip`:
 
 ```bash
-pip install iadl
+pip install ia-downloader
 ```
 
 ## Usage
