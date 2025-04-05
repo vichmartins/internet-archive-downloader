@@ -97,7 +97,7 @@ To remove the module:
 pip uninstall ia-manager
 ```
 
-***IF*** you messed up and ran ```pip uninstall iadl``` first, and still want the dependencies removed, no problem just reinstall the package again ```pip install iadl``` and repeat the above 2 commands in order.
+***IF*** you messed up and ran ```pip uninstall ia-manager``` first, and still want the dependencies removed, no problem just reinstall the package again ```pip install ia-manager``` and repeat the above 2 commands in order.
 
 ### Install in Virtual Enviroment
 
