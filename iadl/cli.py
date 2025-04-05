@@ -1,9 +1,9 @@
 import argparse
 import sys
 from urllib.parse import urlparse
-from iad.scraper import InternetArchiveScraper
-from iad.downloader import FileDownloader
-from iad.extensions import (
+from iadl.scraper import InternetArchiveScraper
+from iadl.downloader import FileDownloader
+from iadl.extensions import (
     ARCHIVE_EXTENSIONS, VIDEO_EXTENSIONS, AUDIO_EXTENSIONS, STREAMING_EXTENSIONS,
     AUDIOBOOK_EXTENSIONS, DISK_IMAGE_EXTENSIONS, DOCUMENT_EXTENSIONS, EXECUTABLE_EXTENSIONS,
     DATA_EXTENSIONS, WEB_EXTENSIONS, COMIC_EXTENSIONS, EBOOK_EXTENSIONS, PICTURE_EXTENSIONS, 

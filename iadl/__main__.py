@@ -1,4 +1,4 @@
-from iad.cli import main
+from iadl.cli import main
 
 if __name__ == "__main__":
     main()

@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from iad.extensions import ALL_EXTENSIONS
+from iadl.extensions import ALL_EXTENSIONS
 
 class InternetArchiveScraper:
     def __init__(self, url="https://archive.org", item_id="rr-sega-mega-cd"):
