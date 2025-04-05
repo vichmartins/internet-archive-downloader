@@ -88,6 +88,9 @@ Usage Examples:
     # Show audio files only
     iadl -u URL -s -m
     iadl --url URL --show-links --audio
+
+Concurrent Downloads:
+  -c, --concurrent      Maximum number of concurrent downloads (default: 1)
     
 Available File Type Filters (use -s/--show-links to preview):
   -z, --archive        Archive formats (.zip, .rar, etc.)
