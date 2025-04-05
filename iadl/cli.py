@@ -1,3 +1,4 @@
+# iad/cli.py
 import argparse
 import sys
 from urllib.parse import urlparse
@@ -11,24 +12,15 @@ from iadl.extensions import (
 )
 
 def extract_item_id(url):
-    """
-    Extract the item ID from an Internet Archive URL.
-    Example: https://archive.org/details/rr-sega-mega-cd → rr-sega-mega-cd
-    """
+    """Extract the item ID from an Internet Archive URL."""
     parsed_url = urlparse(url)
     path = parsed_url.path.strip('/')
     if path.startswith('details/'):
-        # Extract the item ID from the path
         return path.split('/')[1]
-    else:
-        # Assume the path is the item ID
-        return path
+    return path
 
 def get_file_extensions(args):
-    """
-    Get the list of file extensions based on the provided arguments.
-    If no specific category is selected, return None to indicate all files should be downloaded.
-    """
+    """Get file extensions based on provided arguments."""
     file_extensions = []
     
     if args.archive:
@@ -62,9 +54,8 @@ def get_file_extensions(args):
     if args.torrent:
         file_extensions.extend(TORRENT_EXTENSIONS)
     
-    # If no specific category is selected, return None to indicate all files should be downloaded
-    if not any([args.archive, args.video, args.audio, args.streaming, args.audiobooks, 
-                args.disk_images, args.documents, args.executables, args.data, args.web, 
+    if not any([args.archive, args.video, args.audio, args.streaming, args.audiobooks,
+                args.disk_images, args.documents, args.executables, args.data, args.web,
                 args.comics, args.ebooks, args.pictures, args.containers, args.torrent]):
         return None
     
@@ -75,70 +66,70 @@ def main():
     try:
         parser = argparse.ArgumentParser(description='Download files from Internet Archive.')
         
-        # Primary arguments with both short and long forms
-        parser.add_argument('-u', '--url', required=True, help='Full URL of the Internet Archive collection')
-        parser.add_argument('-d', '--dest', required='--show-links' not in sys.argv, 
-                          help='Destination folder for downloaded files (not required if only showing links)')
-        parser.add_argument('-l', '--limit', type=int, default=0, help='Limit number of files to download (0 for all)')
-        parser.add_argument('-s', '--show-links', action='store_true', help='Display file links without downloading')
-        parser.add_argument('-c', '--concurrent', type=int, default=1, help='Maximum concurrent downloads (default: 1)')
+        # Check if show-links is present in any form (-s or --show-links)
+        show_links_present = any(arg in sys.argv for arg in ['-s', '--show-links'])
         
-        # Category filters with short options
-        parser.add_argument('-a', '--archive', action='store_true', help='Download only archive formats')
-        parser.add_argument('-v', '--video', action='store_true', help='Download only video formats')
-        parser.add_argument('-m', '--audio', action='store_true', help='Download only audio formats (m for music)')
-        parser.add_argument('-t', '--streaming', action='store_true', help='Download only streaming formats')
-        parser.add_argument('-b', '--audiobooks', action='store_true', help='Download only audiobook formats')
-        parser.add_argument('-i', '--disk_images', action='store_true', help='Download only disk image formats')
-        parser.add_argument('-o', '--documents', action='store_true', help='Download only document formats')
-        parser.add_argument('-e', '--executables', action='store_true', help='Download only executable formats')
-        parser.add_argument('-f', '--data', action='store_true', help='Download only data formats')
-        parser.add_argument('-w', '--web', action='store_true', help='Download only web formats')
-        parser.add_argument('-x', '--comics', action='store_true', help='Download only comic formats')
-        parser.add_argument('-k', '--ebooks', action='store_true', help='Download only eBook formats')
-        parser.add_argument('-p', '--pictures', action='store_true', help='Download only picture formats')
-        parser.add_argument('-n', '--containers', action='store_true', help='Download only container formats')
-        parser.add_argument('-r', '--torrent', action='store_true', help='Download only torrent files')
+        # Primary arguments
+        parser.add_argument('-u', '--url', required=True, help='Internet Archive URL')
+        parser.add_argument('-d', '--dest', required=not show_links_present,
+                          help='Destination folder (not required with -s/--show-links)')
+        parser.add_argument('-l', '--limit', type=int, default=0, help='Limit files to download')
+        parser.add_argument('-s', '--show-links', action='store_true', 
+                          help='Display links without downloading')
+        parser.add_argument('-c', '--concurrent', type=int, default=1,
+                          help='Max concurrent downloads')
+        
+        # Category filters (using more distinct single letters)
+        parser.add_argument('-z', '--archive', action='store_true', help='Archive formats')
+        parser.add_argument('-v', '--video', action='store_true', help='Video formats')
+        parser.add_argument('-m', '--audio', action='store_true', help='Audio formats')
+        parser.add_argument('-t', '--streaming', action='store_true', help='Streaming formats')
+        parser.add_argument('-b', '--audiobooks', action='store_true', help='Audiobook formats')
+        parser.add_argument('-i', '--disk_images', action='store_true', help='Disk images')
+        parser.add_argument('-o', '--documents', action='store_true', help='Documents')
+        parser.add_argument('-x', '--executables', action='store_true', help='Executables')
+        parser.add_argument('-f', '--data', action='store_true', help='Data files')
+        parser.add_argument('-w', '--web', action='store_true', help='Web files')
+        parser.add_argument('-k', '--comics', action='store_true', help='Comics')
+        parser.add_argument('-e', '--ebooks', action='store_true', help='eBooks')
+        parser.add_argument('-p', '--pictures', action='store_true', help='Pictures')
+        parser.add_argument('-n', '--containers', action='store_true', help='Containers')
+        parser.add_argument('-r', '--torrent', action='store_true', help='Torrents')
         
         args = parser.parse_args()
         
-        # Extract the item ID from the URL
+        # Extract item ID
         item_id = extract_item_id(args.url)
         print(f"Extracted item ID: {item_id}")
         
-        # Get the list of file extensions based on the provided arguments
+        # Get file extensions
         file_extensions = get_file_extensions(args)
-        if file_extensions is not None:
+        if file_extensions:
             print(f"Filtering files with extensions: {file_extensions}")
         else:
             print("Showing all files (no filters applied).")
         
-        # Create scraper object
+        # Create scraper
         scraper = InternetArchiveScraper(url="https://archive.org", item_id=item_id)
-        
-        # Get list of file URLs
-        file_urls = scraper.get_file_links(file_extensions=file_extensions, show_links=args.show_links)
+        file_urls = scraper.get_file_links(file_extensions=file_extensions, 
+                                         show_links=args.show_links)
         
         if not file_urls:
             print("No files found. Exiting.")
             return
         
-        # Apply limit if specified
         if args.limit > 0:
             file_urls = file_urls[:args.limit]
             print(f"Limiting to {args.limit} files")
         
-        # If only showing links, exit here
         if args.show_links:
             print("\nFinished displaying links. No files were downloaded.")
             return
         
-        # Only proceed with downloads if destination is specified
         if not args.dest:
             print("\nError: Destination folder is required for downloads.")
             return
         
-        # Create downloader object and download files
         downloader = FileDownloader(args.dest, args.concurrent)
         downloader.download_files(file_urls)
     
